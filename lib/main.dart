@@ -4,6 +4,11 @@ void main() {
   runApp(const MyApp());
 }
 
+// ThemeData type for darkmode
+final ThemeData _darkTheme = ThemeData(
+  brightness: Brightness.dark,
+);
+
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
@@ -15,6 +20,7 @@ class MyApp extends StatelessWidget {
 
         primarySwatch: Colors.blue,
       ),
+      darkTheme: _darkTheme,
       home: const MyHomePage(title: 'Flutter Demo Home Page'),
     );
   }
