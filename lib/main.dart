@@ -25,18 +25,25 @@ class MyApp extends StatelessWidget {
 }
 
 class MyHomePage extends StatefulWidget {
-
   @override
   State<MyHomePage> createState() => _MyHomePageState();
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  // List for the data from the REST API
+  List? data;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text('Test REST API'),
+      ),
+      body: new Center(
+        child: new ElevatedButton(
+          child: new Text("Get data"),
+          onPressed: data = null,
+        ),
       ),
     );
   }
