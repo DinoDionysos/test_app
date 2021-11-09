@@ -36,6 +36,7 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   // List for the data from the REST API
   List? data;
+  bool toggle = true;
 
   // function that gets the data from a (testing) REST API endpoint and saves it
   // into "data"
@@ -46,8 +47,12 @@ class _MyHomePageState extends State<MyHomePage> {
           "Accept": "application/json"
         }
     );
-    data = json.decode(response.body);
-    print(data![1]["title"]);
+    setState(() {
+      data = json.decode(response.body);
+      print(data![1]["title"]);
+      toggle = !toggle;
+      print(toggle);
+    });
   }
 
   @override
@@ -57,8 +62,11 @@ class _MyHomePageState extends State<MyHomePage> {
         title: Text('Test REST API'),
       ),
       body: Center(
-        child: ElevatedButton(
+        child: toggle ? ElevatedButton(
           child: Text("Get data"),
+          onPressed: getData,
+        ) : ElevatedButton(
+          child: Text("test"),
           onPressed: getData,
         ),
       ),
