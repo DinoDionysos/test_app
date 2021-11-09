@@ -59,8 +59,8 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         title: Text('Test REST API'),
       ),
-      body: Center(
-        child: toggle ? ElevatedButton(
+      body: toggle ? Center(
+        child: ElevatedButton(
           child: Text("Get data"),
           onPressed: getData,
         ) : ElevatedButton(
