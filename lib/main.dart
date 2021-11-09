@@ -55,15 +55,27 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         title: Text('Test REST API'),
       ),
-      body: toggle ? Center(
-        child: ElevatedButton(
-          child: Text("Get data"),
-          onPressed: getData,
-        ) : ElevatedButton(
-          child: Text("test"),
-          onPressed: getData,
-        ),
-      ),
+      body: toggle
+          ? Center(
+              child: ElevatedButton(
+              child: Text("Get data"),
+              onPressed: getData,
+            ))
+          : Column(children: <Widget>[
+              ElevatedButton(
+                child: Text("Hide data"),
+                onPressed: getData,
+              ),
+              Expanded(
+                  child: ListView.builder(
+                      padding: const EdgeInsets.all(16.0),
+                      itemBuilder: (context, i) {
+                        if (i.isOdd) return const Divider();
+                        return ListTile(
+                            title: Text(data![i % data!.length]["title"]),
+                            subtitle: Text(data![i % data!.length]["body"]));
+                      })),
+            ]),
     );
   }
 }
