@@ -49,9 +49,7 @@ class _MyHomePageState extends State<MyHomePage> {
     );
     setState(() {
       data = json.decode(response.body);
-      print(data![1]["title"]);
       toggle = !toggle;
-      print(toggle);
     });
   }
 
