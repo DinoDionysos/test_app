@@ -14,7 +14,6 @@ final ThemeData _darkTheme = ThemeData(
 );
 
 class MyApp extends StatelessWidget {
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -43,10 +42,7 @@ class _MyHomePageState extends State<MyHomePage> {
   void getData() async {
     var response = await http.get(
         Uri.encodeFull("https://jsonplaceholder.typicode.com/posts"),
-        headers: {
-          "Accept": "application/json"
-        }
-    );
+        headers: {"Accept": "application/json"});
     setState(() {
       data = json.decode(response.body);
       toggle = !toggle;
