@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 
 import 'package:http/http.dart' as http;
+import 'dart:async';
+import 'dart:convert';
 
 void main() {
-  runApp(new MyApp());
+  runApp(MyApp());
 }
 
 // ThemeData type for darkmode
@@ -21,7 +23,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       darkTheme: _darkTheme,
-      home: new MyHomePage(),
+      home: MyHomePage(),
     );
   }
 }
@@ -35,16 +37,29 @@ class _MyHomePageState extends State<MyHomePage> {
   // List for the data from the REST API
   List? data;
 
+  // function that gets the data from a (testing) REST API endpoint and saves it
+  // into "data"
+  void getData() async {
+    var response = await http.get(
+        Uri.encodeFull("https://jsonplaceholder.typicode.com/posts"),
+        headers: {
+          "Accept": "application/json"
+        }
+    );
+    data = json.decode(response.body);
+    print(data![1]["title"]);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text('Test REST API'),
       ),
-      body: new Center(
-        child: new ElevatedButton(
-          child: new Text("Get data"),
-          onPressed: data = null,
+      body: Center(
+        child: ElevatedButton(
+          child: Text("Get data"),
+          onPressed: getData,
         ),
       ),
     );
