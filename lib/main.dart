@@ -34,12 +34,13 @@ class MyApp extends StatelessWidget {
 class MyHomePage extends StatefulWidget {
   const MyHomePage({Key? key}) : super(key: key);
   @override
-  State<MyHomePage> createState() => _MyHomePageState();
+  State<MyHomePage> createState() => MyHomePageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
-  // List for the data from the REST API
-  List? data;
+
+
+class MyHomePageState extends State<MyHomePage> {
+  Future<List>? restApiData;
   bool toggle = true;
 
   // function that gets the data from a (testing) REST API endpoint and saves it
