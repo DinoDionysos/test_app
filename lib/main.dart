@@ -43,16 +43,35 @@ class MyHomePageState extends State<MyHomePage> {
   Future<List>? restApiData;
   bool toggle = true;
 
-  // function that gets the data from a (testing) REST API endpoint and saves it
-  // into "data"
-  void getData() async {
-    var response = await http.get(
-        Uri.encodeFull("https://jsonplaceholder.typicode.com/posts"),
-        headers: {"Accept": "application/json"});
-    setState(() {
-      data = json.decode(response.body);
-      toggle = !toggle;
-    });
+  void switch_toggle() {
+    toggle = !toggle;
+  }
+  @override
+  initState() {
+    super.initState();
+    restApiData = restApiGetService?.getJson();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return MyHomePageView(this);
+  }
+}
+
+
+
+class MyHomePageView extends StatelessWidget {
+  final MyHomePageState? state;
+  const MyHomePageView(this.state, {Key? key}) : super(key: key);
+
+  Widget buildRow(String title, String subtitle) {
+    return Column(children: <Widget>[
+      ListTile(
+        title: Text(title),
+        subtitle: Text(subtitle),
+      ),
+      const Divider()
+    ]);
   }
 
   @override
@@ -61,27 +80,33 @@ class MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         title: Text('Test REST API'),
       ),
-      body: toggle
-          ? Center(
-              child: ElevatedButton(
-              child: Text("Get data"),
-              onPressed: getData,
-            ))
-          : Column(children: <Widget>[
-              ElevatedButton(
-                child: Text("Hide data"),
-                onPressed: getData,
-              ),
-              Expanded(
-                  child: ListView.builder(
-                      padding: const EdgeInsets.all(16.0),
-                      itemBuilder: (context, i) {
-                        if (i.isOdd) return const Divider();
-                        return ListTile(
-                            title: Text(data![i % data!.length]["title"]),
-                            subtitle: Text(data![i % data!.length]["body"]));
-                      })),
-            ]),
+      body: FutureBuilder<List>(
+          future: state!.restApiData,
+          builder: (
+              BuildContext context,
+              AsyncSnapshot<List> snapshot,
+              ) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return Center(child: CircularProgressIndicator());
+            } else if (snapshot.connectionState == ConnectionState.done) {
+              if (snapshot.hasError) {
+                final error = snapshot.error;
+                return Center(child: Text(error.toString()));
+              } else if (snapshot.hasData) {
+                return ListView.builder(
+                  padding: const EdgeInsets.all(16.0),
+                  itemCount: snapshot.data!.length,
+                  itemBuilder: (context, index) {
+                    return buildRow(snapshot.data![index]['title'],
+                        snapshot.data![index]['body']);
+                  },
+                );
+              }
+            }
+            return const Text('sum ting wong');
+          }),
     );
   }
 }
+
+
