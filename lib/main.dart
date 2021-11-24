@@ -41,11 +41,7 @@ class MyHomePage extends StatefulWidget {
 
 class MyHomePageState extends State<MyHomePage> {
   Future<List>? restApiData;
-  bool toggle = true;
 
-  void switch_toggle() {
-    toggle = !toggle;
-  }
   @override
   initState() {
     super.initState();
