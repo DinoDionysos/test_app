@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'ui/dark_theme.dart';
+import 'business/rest_api_service.dart';
+
+RestApiService? restApiGetService = new RestApiService();
 
 import 'package:http/http.dart' as http;
 //import 'dart:async';
