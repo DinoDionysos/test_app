@@ -8,10 +8,8 @@ void main() {
   runApp(MyApp());
 }
 
-// ThemeData type for darkmode
-final ThemeData _darkTheme = ThemeData(
-  brightness: Brightness.dark,
-);
+
+
 
 class MyApp extends StatelessWidget {
   @override
